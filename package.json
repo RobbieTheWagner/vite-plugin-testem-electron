@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-testem-electron",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Vite plugin for integrating testem with electron",
   "keywords": [
     "vite",
