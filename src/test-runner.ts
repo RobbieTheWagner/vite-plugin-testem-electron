@@ -1,6 +1,6 @@
 import { spawn, type ChildProcess } from 'node:child_process';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import electron from 'electron';
 import treeKill from 'tree-kill';
 
@@ -75,6 +75,6 @@ async function main(): Promise<void> {
 }
 
 // Check if this script is being run directly
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
   main();
 }
