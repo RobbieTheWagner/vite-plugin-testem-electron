@@ -21,12 +21,11 @@
     ".": "./src/index.js",
     "./test-runner": "./src/test-runner.js",
     "./electron": "./src/electron-helpers.js",
-    "./templates/testem-electron": "./templates/testem-electron.js"
+    "./src/config/testem-electron": "./src/config/testem-electron.js"
   },
   "main": "./src/index.js",
   "files": [
     "src",
-    "templates",
     "README.md"
   ],
   "scripts": {
