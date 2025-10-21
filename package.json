@@ -1,0 +1,54 @@
+{
+  "name": "vite-plugin-testem-electron",
+  "version": "0.0.1",
+  "description": "Vite plugin for testem electron integration",
+  "keywords": [
+    "vite",
+    "plugin",
+    "testem",
+    "electron",
+    "testing"
+  ],
+  "homepage": "https://github.com/RobbieTheWagner/vite-plugin-testem-electron#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RobbieTheWagner/vite-plugin-testem-electron.git"
+  },
+  "license": "MIT",
+  "author": "Robbie Wagner",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.js",
+    "./test-runner": "./src/test-runner.js",
+    "./electron": "./src/electron-helpers.js",
+    "./templates/testem-electron": "./templates/testem-electron.js"
+  },
+  "main": "./src/index.js",
+  "files": [
+    "src",
+    "templates",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "vitest"
+  },
+  "dependencies": {
+    "tree-kill": "^1.2.2"
+  },
+  "devDependencies": {
+    "vitest": "^3.2.4"
+  },
+  "peerDependencies": {
+    "electron": ">=10.0.0",
+    "vite": ">=3.0.0"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "electron",
+      "esbuild"
+    ]
+  }
+}
