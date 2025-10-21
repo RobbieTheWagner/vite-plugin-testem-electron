@@ -40,10 +40,10 @@
   },
   "peerDependencies": {
     "electron": ">=10.0.0",
-    "vite": ">=3.0.0"
+    "vite": ">=6.0.0"
   },
   "engines": {
-    "node": ">=16"
+    "node": ">= 20"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

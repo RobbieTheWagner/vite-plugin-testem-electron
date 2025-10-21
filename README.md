@@ -42,7 +42,7 @@ export default defineConfig({
 Create a `testem-electron.js` file:
 
 ```javascript
-import config from 'vite-plugin-testem-electron/templates/testem-electron';
+import config from 'vite-plugin-testem-electron/config/testem-electron';
 
 export default config;
 ```

@@ -22,10 +22,10 @@ describe('vite-plugin-testem-electron', () => {
   it('should transform test HTML with default options', () => {
     const plugin = viteTestemElectron();
     const testContext = { path: '/tests/index.html' };
-    const transformFn = plugin.transformIndexHtml.transform;
-    
+    const transformFn = plugin.transformIndexHtml.handler;
+
     const transformedHtml = transformFn(testHtml, testContext);
-    
+
     expect(transformedHtml).toContain('window.getTestemId');
     expect(transformedHtml).toContain('<base href=');
     expect(transformedHtml).toContain('http://testemserver/testem.js');
@@ -34,20 +34,20 @@ describe('vite-plugin-testem-electron', () => {
   it('should not transform non-test HTML', () => {
     const plugin = viteTestemElectron();
     const nonTestContext = { path: '/index.html' };
-    const transformFn = plugin.transformIndexHtml.transform;
-    
+    const transformFn = plugin.transformIndexHtml.handler;
+
     const nonTransformedHtml = transformFn(testHtml, nonTestContext);
-    
+
     expect(nonTransformedHtml).toBe(testHtml);
   });
 
   it('should use custom configuration options', () => {
     const customPlugin = viteTestemElectron({ baseHref: '../custom' });
     const testContext = { path: '/tests/index.html' };
-    const customTransformFn = customPlugin.transformIndexHtml.transform;
-    
+    const customTransformFn = customPlugin.transformIndexHtml.handler;
+
     const customTransformed = customTransformFn(testHtml, testContext);
-    
+
     expect(customTransformed).toContain('href="../custom"');
   });
 });
