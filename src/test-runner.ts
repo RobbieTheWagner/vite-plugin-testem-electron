@@ -1,4 +1,4 @@
-import { spawn } from 'node:child_process';
+import { spawn, type ChildProcess } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import electron from 'electron';
@@ -7,23 +7,31 @@ import treeKill from 'tree-kill';
 // Get __filename and __dirname in ESM
 const __filename = fileURLToPath(import.meta.url);
 
+export interface TestemLauncherConfig {
+  exe: string;
+  args: string[];
+  protocol: string;
+}
+
 /**
  * Testem launcher configuration for Electron
  * This script does double-duty:
  * 1. Exports testem launcher config
  * 2. Can be run directly to spawn electron process
  */
-export default {
+const config: TestemLauncherConfig = {
   exe: process.execPath,
   args: [__filename, '<testPage>', '<baseUrl>', '<id>'],
   protocol: 'browser',
 };
 
+export default config;
+
 /**
  * Main function to spawn electron process with test arguments
  */
-async function main() {
-  let [, , testPageUrl, testemUrl, testemId] = process.argv;
+async function main(): Promise<void> {
+  const [, , testPageUrl, testemUrl, testemId] = process.argv;
 
   // Default electron test main path (can be overridden)
   const electronTestMain =
@@ -43,22 +51,26 @@ async function main() {
     electronArgs
   );
 
-  let electronProcess = spawn(electron, electronArgs, {
+  const electronProcess: ChildProcess = spawn(electron as any, electronArgs, {
     stdio: 'inherit',
     cwd: process.cwd(),
   });
 
   // Clean up when we're killed
   process.on('SIGTERM', () => {
-    treeKill(electronProcess.pid);
+    if (electronProcess.pid) {
+      treeKill(electronProcess.pid);
+    }
   });
 
   process.on('SIGINT', () => {
-    treeKill(electronProcess.pid);
+    if (electronProcess.pid) {
+      treeKill(electronProcess.pid);
+    }
   });
 
   electronProcess.on('exit', (code) => {
-    process.exit(code);
+    process.exit(code || 0);
   });
 }
 

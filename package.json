@@ -18,24 +18,30 @@
   "author": "Robbie Wagner",
   "type": "module",
   "exports": {
-    ".": "./src/index.js",
-    "./test-runner": "./src/test-runner.js",
-    "./electron": "./src/electron-helpers.js",
-    "./src/config/testem-electron": "./src/config/testem-electron.js"
+    ".": "./dist/index.js",
+    "./test-runner": "./dist/test-runner.js",
+    "./electron": "./dist/electron-helpers.js",
+    "./src/config/testem-electron": "./dist/config/testem-electron.js"
   },
-  "main": "./src/index.js",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
-    "src",
+    "dist",
     "README.md"
   ],
   "scripts": {
-    "test": "vitest"
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest",
+    "prepublishOnly": "pnpm build"
   },
   "dependencies": {
     "tree-kill": "^1.2.2"
   },
   "devDependencies": {
+    "@types/node": "^22.0.0",
     "release-plan": "^0.17.0",
+    "typescript": "^5.6.0",
     "vitest": "^3.2.4"
   },
   "peerDependencies": {

@@ -1,15 +1,24 @@
+export interface ViteTestemElectronOptions {
+  testPattern?: string;
+  baseHref?: string;
+}
+
+export interface TransformContext {
+  path: string;
+}
+
 /**
  * Vite plugin for testem electron integration
  * Injects testem support scripts into test HTML files
  */
-export default function viteTestemElectron(options = {}) {
+export default function viteTestemElectron(options: ViteTestemElectronOptions = {}) {
   const { testPattern = '/tests/', baseHref = '..' } = options;
 
   return {
     name: 'vite-testem-electron',
     transformIndexHtml: {
-      order: 'pre',
-      handler(html, ctx) {
+      order: 'pre' as const,
+      handler(html: string, ctx: TransformContext): string {
         // Only transform test HTML files
         if (ctx.path.includes(testPattern)) {
           return injectTestemSupport(html, { baseHref });
@@ -20,13 +29,14 @@ export default function viteTestemElectron(options = {}) {
   };
 }
 
+interface InjectOptions {
+  baseHref?: string;
+}
+
 /**
  * Inject testem support scripts into HTML
- * @param {string} html - Original HTML content
- * @param {object} options - Injection options
- * @returns {string} Modified HTML with testem support
  */
-function injectTestemSupport(html, options = {}) {
+function injectTestemSupport(html: string, options: InjectOptions = {}): string {
   const { baseHref = '..' } = options;
 
   // Find insertion points
