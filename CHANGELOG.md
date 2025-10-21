@@ -2,6 +2,17 @@
 
 ## Release (2025-10-21)
 
+* vite-plugin-testem-electron 1.0.2 (patch)
+
+#### :bug: Bug Fix
+* `vite-plugin-testem-electron`
+  * [#6](https://github.com/RobbieTheWagner/vite-plugin-testem-electron/pull/6) noop when running outside electron ([@RobbieTheWagner](https://github.com/RobbieTheWagner))
+
+#### Committers: 1
+- Robbie Wagner ([@RobbieTheWagner](https://github.com/RobbieTheWagner))
+
+## Release (2025-10-21)
+
 * vite-plugin-testem-electron 1.0.1 (patch)
 
 #### :bug: Bug Fix
