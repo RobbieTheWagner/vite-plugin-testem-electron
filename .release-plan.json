@@ -2,8 +2,8 @@
   "solution": {
     "vite-plugin-testem-electron": {
       "impact": "patch",
-      "oldVersion": "1.0.0",
-      "newVersion": "1.0.1",
+      "oldVersion": "1.0.1",
+      "newVersion": "1.0.2",
       "tagName": "latest",
       "constraints": [
         {
@@ -14,5 +14,5 @@
       "pkgJSONPath": "./package.json"
     }
   },
-  "description": "## Release (2025-10-21)\n\n* vite-plugin-testem-electron 1.0.1 (patch)\n\n#### :bug: Bug Fix\n* `vite-plugin-testem-electron`\n  * [#4](https://github.com/RobbieTheWagner/vite-plugin-testem-electron/pull/4) Fix path loading issue ([@RobbieTheWagner](https://github.com/RobbieTheWagner))\n\n#### Committers: 1\n- Robbie Wagner ([@RobbieTheWagner](https://github.com/RobbieTheWagner))\n"
+  "description": "## Release (2025-10-21)\n\n* vite-plugin-testem-electron 1.0.2 (patch)\n\n#### :bug: Bug Fix\n* `vite-plugin-testem-electron`\n  * [#6](https://github.com/RobbieTheWagner/vite-plugin-testem-electron/pull/6) noop when running outside electron ([@RobbieTheWagner](https://github.com/RobbieTheWagner))\n\n#### Committers: 1\n- Robbie Wagner ([@RobbieTheWagner](https://github.com/RobbieTheWagner))\n"
 }
