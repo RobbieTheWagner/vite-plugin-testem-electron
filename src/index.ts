@@ -8,19 +8,37 @@ export interface TransformContext {
 }
 
 /**
+ * Check if the npm/pnpm script contains testem with testem-electron.cjs
+ */
+function isTestemElectronActive(): boolean {
+  const script = process.env.npm_lifecycle_script;
+
+  return !!(
+    script &&
+    script.includes('testem') &&
+    script.includes('-f') &&
+    script.includes('testem-electron')
+  );
+}
+
+/**
  * Vite plugin for testem electron integration
  * Injects testem support scripts into test HTML files
  */
-export default function viteTestemElectron(options: ViteTestemElectronOptions = {}) {
+export default function viteTestemElectron(
+  options: ViteTestemElectronOptions = {}
+) {
   const { testPattern = '/tests/', baseHref = '..' } = options;
+
+  const isActive = isTestemElectronActive();
 
   return {
     name: 'vite-testem-electron',
     transformIndexHtml: {
       order: 'pre' as const,
       handler(html: string, ctx: TransformContext): string {
-        // Only transform test HTML files
-        if (ctx.path.includes(testPattern)) {
+        // Only transform if plugin is active and processing test HTML files
+        if (isActive && ctx.path.includes(testPattern)) {
           return injectTestemSupport(html, { baseHref });
         }
         return html;
@@ -36,7 +54,10 @@ interface InjectOptions {
 /**
  * Inject testem support scripts into HTML
  */
-function injectTestemSupport(html: string, options: InjectOptions = {}): string {
+function injectTestemSupport(
+  html: string,
+  options: InjectOptions = {}
+): string {
   const { baseHref = '..' } = options;
 
   // Find insertion points
