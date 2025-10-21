@@ -8,8 +8,8 @@ export default function viteTestemElectron(options = {}) {
   return {
     name: 'vite-testem-electron',
     transformIndexHtml: {
-      enforce: 'pre',
-      transform(html, ctx) {
+      order: 'pre',
+      handler(html, ctx) {
         // Only transform test HTML files
         if (ctx.path.includes(testPattern)) {
           return injectTestemSupport(html, { baseHref });
