@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { BrowserWindow, session } from 'electron';
+import { BrowserWindow, session, protocol, net } from 'electron';
 
 // These are the command-line arguments passed to us by test-runner.js
 const [, , , testPageURL, testemURL, testemId] = process.argv;
@@ -9,7 +9,7 @@ const [, , , testPageURL, testemURL, testemId] = process.argv;
  * Set up communication with the testem server
  * Intercepts requests to 'testemserver' and redirects them to the actual testem server
  */
-export function setupTestem() {
+export function setupTestem(): void {
   if (!testemURL) {
     console.log(
       'vite-plugin-testem-electron: No testem URL provided, running in standalone mode'
@@ -32,13 +32,17 @@ export function setupTestem() {
   });
 }
 
+export interface TestWindowOptions {
+  width?: number;
+  height?: number;
+  show?: boolean;
+  preloadPath?: string;
+}
+
 /**
  * Open the test window
- * @param {string} emberAppDir - Path to the built Ember app directory
- * @param {object} options - Window configuration options
- * @returns {BrowserWindow} The created test window
  */
-export function openTestWindow(emberAppDir, options = {}) {
+export function openTestWindow(emberAppDir: string, options: TestWindowOptions = {}): BrowserWindow {
   const {
     width = 1200,
     height = 800,
@@ -58,7 +62,7 @@ export function openTestWindow(emberAppDir, options = {}) {
     },
   });
 
-  delete window.module;
+  delete (window as any).module;
 
   // Convert the emberAppDir to a file URL and append a '/' so when it's joined
   // with the testPageURL the last path component isn't dropped
@@ -74,7 +78,7 @@ export function openTestWindow(emberAppDir, options = {}) {
 
   // https://github.com/nodejs/node/issues/9500
   for (const [key, value] of url.searchParams.entries()) {
-    if ([null, undefined, ''].includes(value)) {
+    if ([null, undefined, ''].includes(value as any)) {
       url.searchParams.set(key, 'true');
     }
   }
@@ -90,11 +94,8 @@ export function openTestWindow(emberAppDir, options = {}) {
 
 /**
  * Handle file URLs for asset loading
- * @param {string} emberAppDir - Path to the built Ember app directory
  */
-export function handleFileUrls(emberAppDir) {
-  const { protocol, net } = require('electron');
-
+export function handleFileUrls(emberAppDir: string): void {
   protocol.handle('file', async ({ url }) => {
     const assetPath = await getAssetPath(emberAppDir, url);
     return net.fetch(pathToFileURL(assetPath).href, {
@@ -105,11 +106,8 @@ export function handleFileUrls(emberAppDir) {
 
 /**
  * Get the correct asset path for file URLs
- * @param {string} emberAppDir - Path to the built Ember app directory
- * @param {string} url - The file URL to resolve
- * @returns {Promise<string>} The resolved asset path
  */
-async function getAssetPath(emberAppDir, url) {
+async function getAssetPath(emberAppDir: string, url: string): Promise<string> {
   const { access } = await import('node:fs/promises');
   const { fileURLToPath } = await import('node:url');
   const { parse, relative, join } = await import('node:path');

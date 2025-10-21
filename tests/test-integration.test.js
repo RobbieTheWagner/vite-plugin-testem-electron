@@ -3,7 +3,7 @@
  * Tests the HTML transformation functionality
  */
 import { describe, it, expect } from 'vitest';
-import viteTestemElectron from './src/index.js';
+import viteTestemElectron from '../src/index.js';
 
 // Test HTML that resembles a test page
 const testHtml = `<!DOCTYPE html>
