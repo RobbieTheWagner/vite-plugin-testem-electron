@@ -2,8 +2,39 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { BrowserWindow, session, protocol, net } from 'electron';
 
+/**
+ * Parse test arguments from process.argv
+ * Handles Electron flags being present before the '--' separator
+ */
+function parseTestArgs(): {
+  testPageURL: string;
+  testemURL: string;
+  testemId: string;
+} {
+  const args = process.argv;
+  const separatorIndex = args.indexOf('--');
+
+  if (separatorIndex === -1) {
+    throw new Error(
+      'vite-plugin-testem-electron: Missing "--" separator in process.argv'
+    );
+  }
+
+  if (args.length < separatorIndex + 4) {
+    throw new Error(
+      `vite-plugin-testem-electron: Missing required test arguments. Expected testPageURL, testemURL, and testemId after "--" separator. Got: ${args.slice(separatorIndex + 1).join(', ')}`
+    );
+  }
+
+  return {
+    testPageURL: args[separatorIndex + 1],
+    testemURL: args[separatorIndex + 2],
+    testemId: args[separatorIndex + 3],
+  };
+}
+
 // These are the command-line arguments passed to us by test-runner.js
-const [, , , testPageURL, testemURL, testemId] = process.argv;
+const { testPageURL, testemURL, testemId } = parseTestArgs();
 
 /**
  * Set up communication with the testem server
