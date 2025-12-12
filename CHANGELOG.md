@@ -1,5 +1,10 @@
 # Changelog
 
+
+
+
+
+
 ## Release (2025-12-12)
 
 * vite-plugin-testem-electron 1.1.1 (patch)
