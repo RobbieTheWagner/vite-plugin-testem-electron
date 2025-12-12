@@ -32,8 +32,8 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "test": "vitest",
-    "prepublishOnly": "pnpm build"
+    "prepublishOnly": "pnpm build",
+    "test": "vitest"
   },
   "dependencies": {
     "tree-kill": "^1.2.2"
