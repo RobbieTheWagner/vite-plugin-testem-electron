@@ -31,7 +31,28 @@ export default config;
  * Main function to spawn electron process with test arguments
  */
 async function main(): Promise<void> {
-  const [, , testPageUrl, testemUrl, testemId] = process.argv;
+  const args = process.argv.slice(2);
+
+  // Extract Electron flags (anything starting with -- that comes before the first non-flag arg)
+  const electronFlags: string[] = [];
+  let testArgsStartIndex = -1;
+
+  for (let i = 0; i < args.length; i++) {
+    if (args[i].startsWith('--')) {
+      electronFlags.push(args[i]);
+    } else {
+      testArgsStartIndex = i;
+      break;
+    }
+  }
+
+  if (testArgsStartIndex === -1 || args.length < testArgsStartIndex + 3) {
+    throw new Error('Missing required arguments: testPageUrl, testemUrl, testemId');
+  }
+
+  const testPageUrl = args[testArgsStartIndex];
+  const testemUrl = args[testArgsStartIndex + 1];
+  const testemId = args[testArgsStartIndex + 2];
 
   // Default electron test main path (can be overridden)
   const electronTestMain =
@@ -39,6 +60,7 @@ async function main(): Promise<void> {
     path.join(process.cwd(), 'electron-app', 'tests', 'index.ts');
 
   const electronArgs = [
+    ...electronFlags, // Insert Electron flags first
     electronTestMain,
     '--', // needed because https://github.com/electron/electron/pull/13039
     testPageUrl,
