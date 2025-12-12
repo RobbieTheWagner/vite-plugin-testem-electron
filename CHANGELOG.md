@@ -2,6 +2,17 @@
 
 ## Release (2025-12-12)
 
+* vite-plugin-testem-electron 1.1.1 (patch)
+
+#### :bug: Bug Fix
+* `vite-plugin-testem-electron`
+  * [#10](https://github.com/RobbieTheWagner/vite-plugin-testem-electron/pull/10) Fix args ([@RobbieTheWagner](https://github.com/RobbieTheWagner))
+
+#### Committers: 1
+- Robbie Wagner ([@RobbieTheWagner](https://github.com/RobbieTheWagner))
+
+## Release (2025-12-12)
+
 * vite-plugin-testem-electron 1.1.0 (minor)
 
 #### :rocket: Enhancement
