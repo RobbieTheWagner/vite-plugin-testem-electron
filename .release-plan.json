@@ -1,18 +1,8 @@
 {
   "solution": {
     "vite-plugin-testem-electron": {
-      "impact": "patch",
-      "oldVersion": "1.1.0",
-      "newVersion": "1.1.1",
-      "tagName": "latest",
-      "constraints": [
-        {
-          "impact": "patch",
-          "reason": "Appears in changelog section :bug: Bug Fix"
-        }
-      ],
-      "pkgJSONPath": "./package.json"
+      "oldVersion": "1.1.1"
     }
   },
-  "description": "## Release (2025-12-12)\n\n* vite-plugin-testem-electron 1.1.1 (patch)\n\n#### :bug: Bug Fix\n* `vite-plugin-testem-electron`\n  * [#10](https://github.com/RobbieTheWagner/vite-plugin-testem-electron/pull/10) Fix args ([@RobbieTheWagner](https://github.com/RobbieTheWagner))\n\n#### Committers: 1\n- Robbie Wagner ([@RobbieTheWagner](https://github.com/RobbieTheWagner))\n"
+  "description": "\n\n\n\n"
 }
